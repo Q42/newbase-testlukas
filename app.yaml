@@ -1,3 +1,5 @@
+# documentation on https://cloud.google.com/appengine/docs/python/config/appconfig
+
 application: newbase-testlukas
 version: 1
 runtime: python27
@@ -11,6 +13,7 @@ handlers:
 
 - url: .*
   script: main.app
+  secure: always
 
 libraries:
 - name: webapp2
