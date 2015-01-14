@@ -16,12 +16,11 @@ class MainHandler(webapp2.RequestHandler):
         if (env and env.startswith('Google App Engine/')):
           # Connecting from App Engine
           db = MySQLdb.connect(
-            unix_socket='/cloudsql/newbase-testlukas:newbase-testlukas',
-            user='root',
-            passwd='n3wb4s3L0L')
+            unix_socket='/cloudsql/newbase-testlukas:us',
+            user='root')
         else:
           db = MySQLdb.connect(
-            host = '173.194.228.160',
+            host = '173.194.228.163',
             port=3306,
             user = 'root',
             passwd = 'n3wb4s3L0L')
