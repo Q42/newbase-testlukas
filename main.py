@@ -7,6 +7,7 @@ import cgi
 from google.appengine.ext.webapp.util import run_wsgi_app
 import MySQLdb
 import os
+import logging
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -17,19 +18,25 @@ class MainHandler(webapp2.RequestHandler):
           # Connecting from App Engine
           db = MySQLdb.connect(
             unix_socket='/cloudsql/newbase-testlukas:us',
-            user='root')
+        user='root',
+        db = 'newbase')
         else:
           db = MySQLdb.connect(
             host = '173.194.228.163',
             port=3306,
             user = 'root',
-            passwd = 'n3wb4s3L0L')
+        passwd = 'n3wb4s3L0L',
+        db = 'newbase')
 
         cursor = db.cursor()
         cursor.execute('SELECT 1 + 1')
+        cursor.execute('SELECT * from projects')
+        response = json.dumps(cursor.fetchall())
+
+        logging.info('returning: ' + response)
 
         self.response.content_type = 'text/json'
-        self.response.write(json.dumps(cursor.fetchall()))
+        self.response.write(response)
         # other response stuff? https://webapp-improved.appspot.com/guide/response.html
 
 # webapp2: https://webapp-improved.appspot.com/index.html
